@@ -800,6 +800,13 @@ if (subjectOption.value === "Other") {
 });
 
 
+document.getElementById("contactForm").addEventListener("submit", function () {
+    document.getElementById("finalSubject").value =
+        subjectOption.value === "Other"
+        ? customSubject.value
+        : subjectOption.value;
+});
+
 
 // ==========================================
 // END OF SKP OFFICIAL PORTFOLIO JAVASCRIPT
