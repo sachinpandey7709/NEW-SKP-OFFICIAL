@@ -12,7 +12,7 @@ This portfolio showcases my technical skills, cybersecurity knowledge, projects,
 
 🌐 Live Portfolio
 
-Website: "Visit My Portfolio" (https://sachinpandey7709.github.io/NEW-SKP-OFFICIAL/)
+- Website: "Visit My Portfolio" (https://sachinpandey7709.github.io/NEW-SKP-OFFICIAL/)
 
 ---
 
@@ -194,8 +194,8 @@ The main objectives of this portfolio are:
 I'm open to connecting with cybersecurity professionals, recruiters, and technology enthusiasts.
 
 Platform| Link
-GitHub| https://github.com/sachinpandey7709/
-Portfolio| https://sachinpandey7709.github.io/NEW-SKP-OFFICIAL/
+- GitHub -  https://github.com/sachinpandey7709/
+- Portfolio -  https://sachinpandey7709.github.io/NEW-SKP-OFFICIAL/
 
 ---
 
