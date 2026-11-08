@@ -383,3 +383,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+
+if (response.ok && result.success) {
+
+    Swal.fire({
+        title: "Good Job!",
+        text: "Your message has been sent successfully!",
+        icon: "success",
+        confirmButtonText: "Great!",
+        confirmButtonColor: "#6c63ff"
+    });
+
+    contactForm.reset();
+
+}
+
+catch (error) {
+
+    Swal.fire({
+        title: "Oops!",
+        text: "Something went wrong! Please try again.",
+        icon: "error",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#d33"
+    });
+
+    console.error("Contact Form Error:", error);
+
+}
