@@ -1,11 +1,6 @@
-// ==========================================
-// SKP OFFICIAL PORTFOLIO - JAVASCRIPT
-// ==========================================
-
-
-// ==========================================
-// 1. LOADING SCREEN
-// ==========================================
+// ==============================
+// LOADING SCREEN
+// ==============================
 
 window.addEventListener("load", function () {
 
@@ -20,9 +15,9 @@ window.addEventListener("load", function () {
 });
 
 
-// ==========================================
-// 2. CURRENT YEAR
-// ==========================================
+// ==============================
+// CURRENT YEAR
+// ==============================
 
 const yearElement = document.getElementById("year");
 
@@ -31,19 +26,16 @@ if (yearElement) {
 }
 
 
-// ==========================================
-// 3. MOBILE SIDEBAR
-// ==========================================
+// ==============================
+// MOBILE SIDEBAR
+// ==============================
 
 const hamburger = document.getElementById("hamburger");
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const sidebarClose = document.getElementById("sidebarClose");
 
-
 function openSidebar() {
-
-    if (!sidebar || !overlay || !hamburger) return;
 
     sidebar.classList.add("open");
     overlay.classList.add("show");
@@ -53,10 +45,7 @@ function openSidebar() {
 
 }
 
-
 function closeSidebar() {
-
-    if (!sidebar || !overlay || !hamburger) return;
 
     sidebar.classList.remove("open");
     overlay.classList.remove("show");
@@ -66,62 +55,24 @@ function closeSidebar() {
 
 }
 
-
 if (hamburger && sidebar && overlay && sidebarClose) {
 
     hamburger.addEventListener("click", openSidebar);
-
     sidebarClose.addEventListener("click", closeSidebar);
-
     overlay.addEventListener("click", closeSidebar);
 
     document.querySelectorAll(".sidebar a").forEach(link => {
-
         link.addEventListener("click", closeSidebar);
-
     });
 
 }
 
 
-// Close sidebar using Escape key
-
-document.addEventListener("keydown", function (event) {
-
-    if (event.key === "Escape") {
-        closeSidebar();
-    }
-
-});
-
-
-// ==========================================
-// 4. DARK MODE / LIGHT MODE
-// ==========================================
+// ==============================
+// DARK MODE TOGGLE
+// ==============================
 
 const themeToggle = document.getElementById("themeToggle");
-
-
-function updateThemeIcon() {
-
-    if (!themeToggle) return;
-
-    const icon = themeToggle.querySelector("i");
-
-    if (!icon) return;
-
-    if (document.body.classList.contains("light")) {
-
-        icon.className = "bx bx-moon";
-
-    } else {
-
-        icon.className = "bx bx-sun";
-
-    }
-
-}
-
 
 if (themeToggle) {
 
@@ -129,14 +80,19 @@ if (themeToggle) {
 
         document.body.classList.toggle("light");
 
-        const currentTheme =
-            document.body.classList.contains("light")
-                ? "light"
-                : "dark";
+        const icon = themeToggle.querySelector("i");
 
-        localStorage.setItem("theme", currentTheme);
+        if (document.body.classList.contains("light")) {
 
-        updateThemeIcon();
+            icon.className = "bx bx-moon";
+            localStorage.setItem("theme", "light");
+
+        } else {
+
+            icon.className = "bx bx-sun";
+            localStorage.setItem("theme", "dark");
+
+        }
 
     });
 
@@ -145,40 +101,33 @@ if (themeToggle) {
 
 // LOAD SAVED THEME
 
-const savedTheme = localStorage.getItem("theme");
-
-if (savedTheme === "light") {
+if (localStorage.getItem("theme") === "light") {
 
     document.body.classList.add("light");
 
-} else {
-
-    document.body.classList.remove("light");
+    if (themeToggle) {
+        themeToggle.querySelector("i").className = "bx bx-moon";
+    }
 
 }
 
-updateThemeIcon();
 
-
-// ==========================================
-// 5. COLOR PICKER
-// ==========================================
+// ==============================
+// COLOR PICKER
+// ==============================
 
 const colorPicker = document.getElementById("colorPicker");
-
 
 if (colorPicker) {
 
     colorPicker.addEventListener("input", function () {
 
-        const selectedColor = colorPicker.value;
-
         document.documentElement.style.setProperty(
             "--accent",
-            selectedColor
+            colorPicker.value
         );
 
-        localStorage.setItem("accentColor", selectedColor);
+        localStorage.setItem("accentColor", colorPicker.value);
 
     });
 
@@ -189,7 +138,7 @@ if (colorPicker) {
 
 const savedColor = localStorage.getItem("accentColor");
 
-if (savedColor && /^#[0-9A-Fa-f]{6}$/.test(savedColor)) {
+if (savedColor) {
 
     document.documentElement.style.setProperty(
         "--accent",
@@ -203,14 +152,13 @@ if (savedColor && /^#[0-9A-Fa-f]{6}$/.test(savedColor)) {
 }
 
 
-// ==========================================
-// 6. SKILLS DROPDOWN FILTER
-// ==========================================
+// ==============================
+// SKILLS DROPDOWN FILTER
+// ==============================
 
 const skillFilter = document.getElementById("skillFilter");
 
 const skillCards = document.querySelectorAll(".skill-card");
-
 
 if (skillFilter) {
 
@@ -239,14 +187,13 @@ if (skillFilter) {
 }
 
 
-// ==========================================
-// 7. NAVBAR ACTIVE LINKS
-// ==========================================
+// ==============================
+// NAVBAR ACTIVE LINKS
+// ==============================
 
 const sections = document.querySelectorAll("main section");
 
 const navLinks = document.querySelectorAll(".nav-links a");
-
 
 function updateActiveLink() {
 
@@ -257,9 +204,7 @@ function updateActiveLink() {
         const sectionTop = section.offsetTop - 150;
 
         if (window.scrollY >= sectionTop) {
-
             current = section.getAttribute("id");
-
         }
 
     });
@@ -269,29 +214,23 @@ function updateActiveLink() {
         link.classList.remove("active");
 
         if (link.getAttribute("href") === "#" + current) {
-
             link.classList.add("active");
-
         }
 
     });
 
 }
 
-
 window.addEventListener("scroll", updateActiveLink);
 
-window.addEventListener("load", updateActiveLink);
 
-
-// ==========================================
-// 8. SCROLL REVEAL ANIMATION
-// ==========================================
+// ==============================
+// SCROLL REVEAL ANIMATION
+// ==============================
 
 const revealElements = document.querySelectorAll(
     ".section, .info-card, .skill-card, .service-card, .project-card"
 );
-
 
 if ("IntersectionObserver" in window) {
 
@@ -300,44 +239,29 @@ if ("IntersectionObserver" in window) {
         entries.forEach(entry => {
 
             if (entry.isIntersecting) {
-
                 entry.target.classList.add("visible");
-
                 observer.unobserve(entry.target);
-
             }
 
         });
 
     }, {
-
         threshold: 0.12
-
     });
-
 
     revealElements.forEach(element => {
 
         element.classList.add("reveal");
-
         observer.observe(element);
-
-    });
-
-} else {
-
-    revealElements.forEach(element => {
-
-        element.classList.add("visible");
 
     });
 
 }
 
 
-// ==========================================
-// 9. SMOOTH SCROLL
-// ==========================================
+// ==============================
+// SMOOTH SCROLL
+// ==============================
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
@@ -354,11 +278,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             event.preventDefault();
 
             target.scrollIntoView({
-
-                behavior: "smooth",
-
-                block: "start"
-
+                behavior: "smooth"
             });
 
         }
@@ -368,303 +288,90 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 
-// ==========================================
-// 10. HTML ESCAPE SECURITY
-// ==========================================
+// ======================================
+// CONTACT FORM - WEB3FORMS
+// ======================================
 
-function escapeHTML(value) {
-
-    return String(value).replace(/[&<>"']/g, function (character) {
-
-        const entities = {
-
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-
-        };
-
-        return entities[character];
-
-    });
-
-}
-
-
-// ==========================================
-// 11. CONTACT FORM - WEB3FORMS
-// ==========================================
-
-function initializeContactForm() {
+document.addEventListener("DOMContentLoaded", function () {
 
     const contactForm = document.getElementById("contactForm");
-
+    const formMessage = document.getElementById("formMessage");
     const submitBtn = document.getElementById("submitBtn");
 
-    const formMessage = document.getElementById("formMessage");
-
-
-    // CHECK FORM ELEMENTS
-
-    if (!contactForm || !submitBtn) {
-
-        console.error("Contact Form HTML elements not found!");
-
+    if (!contactForm || !formMessage || !submitBtn) {
+        console.error("Contact form elements not found!");
         return;
-
     }
-
-
-    console.log("Contact Form Initialized Successfully!");
-
-
-    let isSubmitting = false;
-
-
-    // FORM SUBMISSION
 
     contactForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
-        event.stopPropagation();
-
-
-        // PREVENT DOUBLE SUBMISSION
-
-        if (isSubmitting) return;
-
-
-        // FORM VALIDATION
-
         if (!contactForm.checkValidity()) {
-
             contactForm.reportValidity();
-
             return;
-
         }
-
-
-        // CHECK SWEETALERT2
-
-        if (typeof Swal === "undefined") {
-
-            alert("SweetAlert2 is not loaded. Please check your HTML.");
-
-            console.error("SweetAlert2 library not found!");
-
-            return;
-
-        }
-
-
-        // CHECK ACCESS KEY
-
-        const accessKey = contactForm.querySelector(
-            'input[name="access_key"]'
-        );
-
-
-        if (!accessKey || !accessKey.value.trim()) {
-
-            Swal.fire({
-
-                title: "Access Key Missing!",
-
-                text: "Please configure your Web3Forms Access Key.",
-
-                icon: "error"
-
-            });
-
-            return;
-
-        }
-
-
-        // GET VISITOR NAME
-
-        const nameInput = contactForm.querySelector(
-            '[name="name"]'
-        );
-
-        const visitorName = nameInput
-            ? nameInput.value.trim()
-            : "";
-
-
-        if (!visitorName) {
-
-            Swal.fire({
-
-                title: "Name Required!",
-
-                text: "Please enter your name.",
-
-                icon: "warning"
-
-            });
-
-            return;
-
-        }
-
-
-        // START LOADING
-
-        isSubmitting = true;
 
         submitBtn.disabled = true;
-
         submitBtn.innerHTML =
             'Sending... <i class="bx bx-loader-alt bx-spin"></i>';
 
-
-        if (formMessage) {
-
-            formMessage.style.display = "none";
-
-        }
-
+        formMessage.style.display = "block";
+        formMessage.className = "form-message";
+        formMessage.textContent = "Sending your message...";
 
         try {
 
-            // GET FORM DATA
-
             const formData = new FormData(contactForm);
-
-
-            // WEB3FORMS API REQUEST
 
             const response = await fetch(
                 "https://api.web3forms.com/submit",
                 {
-
                     method: "POST",
-
                     body: formData,
-
                     headers: {
-
                         "Accept": "application/json"
-
                     }
-
                 }
             );
 
-
-            // READ API RESPONSE
-
             const result = await response.json();
-
-
-            console.log("Web3Forms Status:", response.status);
 
             console.log("Web3Forms Response:", result);
 
+            if (response.ok && result.success) {
 
-            // ==================================
-            // SUCCESS RESPONSE
-            // ==================================
+                formMessage.className = "form-message success";
 
-            if (response.ok && result.success === true) {
-
-                // RESET FORM
+                formMessage.innerHTML = `
+                    <i class="bx bx-check-circle"></i>
+                    Message Sent Successfully!
+                    Thank you for contacting me.
+                `;
 
                 contactForm.reset();
 
+            } else {
 
-                // SUCCESS POPUP WITH DYNAMIC NAME
+                formMessage.className = "form-message error";
 
-                await Swal.fire({
-
-                    title: "Message Sent Successfully!",
-
-                    html: `
-                        <p>Thank you, <strong>${escapeHTML(visitorName)}</strong>!</p>
-                        <p>Your message has been sent successfully.</p>
-                        <p>I'll get back to you soon.</p>
-                    `,
-
-                    icon: "success",
-
-                    confirmButtonText: "Great!",
-
-                    confirmButtonColor: "#6c63ff",
-
-                    allowOutsideClick: false,
-
-                    allowEscapeKey: true
-
-                });
-
-            }
-
-
-            // ==================================
-            // API ERROR
-            // ==================================
-
-            else {
+                formMessage.textContent =
+                    result.message || "Message sending failed.";
 
                 console.error("Web3Forms Error:", result);
 
-                await Swal.fire({
-
-                    title: "Message Failed!",
-
-                    text: result.message ||
-                        "Your message could not be sent. Please try again.",
-
-                    icon: "error",
-
-                    confirmButtonText: "Try Again",
-
-                    confirmButtonColor: "#d33"
-
-                });
-
             }
 
-        }
+        } catch (error) {
 
+            formMessage.className = "form-message error";
 
-        // ==================================
-        // NETWORK ERROR
-        // ==================================
-
-        catch (error) {
+            formMessage.textContent =
+                "Network error! Please check your internet connection and try again.";
 
             console.error("Contact Form Error:", error);
 
-            await Swal.fire({
-
-                title: "Oops!",
-
-                text: "Network error! Please check your internet connection and try again.",
-
-                icon: "error",
-
-                confirmButtonText: "OK",
-
-                confirmButtonColor: "#d33"
-
-            });
-
-        }
-
-
-        // ==================================
-        // RESTORE SUBMIT BUTTON
-        // ==================================
-
-        finally {
-
-            isSubmitting = false;
+        } finally {
 
             submitBtn.disabled = false;
 
@@ -675,27 +382,54 @@ function initializeContactForm() {
 
     });
 
-}
+});
 
+const messageInput = document.getElementById("message");
+const charCount = document.getElementById("charCount");
 
-// ==========================================
-// 12. INITIALIZE CONTACT FORM
-// ==========================================
+if (messageInput && charCount) {
 
-if (document.readyState === "loading") {
+    messageInput.addEventListener("input", function () {
 
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeContactForm
-    );
+        charCount.textContent =
+            `${messageInput.value.length} / 1000`;
 
-} else {
-
-    initializeContactForm();
+    });
 
 }
 
+// ==========================================
+// MESSAGE CHARACTER COUNTER
+// ==========================================
 
-// ==========================================
-// END OF SKP OFFICIAL PORTFOLIO JAVASCRIPT
-// ==========================================
+document.addEventListener("DOMContentLoaded", function () {
+
+    const messageInput = document.getElementById("message");
+
+    const charCount = document.getElementById("charCount");
+
+    if (!messageInput || !charCount) {
+
+        console.error("Message or Character Counter not found!");
+
+        return;
+
+    }
+
+    function updateCharacterCount() {
+
+        const currentLength = messageInput.value.length;
+
+        charCount.textContent = `${currentLength} / 1000`;
+
+    }
+
+    // Count while typing and deleting
+
+    messageInput.addEventListener("input", updateCharacterCount);
+
+    // Initial count
+
+    updateCharacterCount();
+
+});
