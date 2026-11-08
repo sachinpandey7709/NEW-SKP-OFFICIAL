@@ -921,3 +921,94 @@ footer a {
     }
 
 }
+
+/* =====================================
+   CONTACT FORM ICON ALIGNMENT FIX
+===================================== */
+
+#contact #contactForm .input-box {
+    position: relative;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+/* ICON POSITION */
+
+#contact #contactForm .input-box > i {
+    position: absolute !important;
+
+    left: 25px !important;
+    top: 50% !important;
+
+    transform: translateY(-50%) !important;
+
+    font-size: 25px !important;
+    color: var(--accent);
+
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* INPUT AND TEXTAREA */
+
+#contact #contactForm .input-box input,
+#contact #contactForm .input-box textarea {
+
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    padding-left: 85px !important;
+    padding-right: 20px !important;
+
+    text-align: left !important;
+
+    border-radius: 15px;
+    outline: none;
+}
+
+/* INPUT HEIGHT */
+
+#contact #contactForm .input-box input {
+    height: 75px;
+}
+
+/* PLACEHOLDER */
+
+#contact #contactForm .input-box input::placeholder,
+#contact #contactForm .input-box textarea::placeholder {
+
+    text-align: left !important;
+    opacity: 1;
+}
+
+/* MESSAGE TEXTAREA */
+
+#contact #contactForm .message-box textarea {
+
+    min-height: 250px;
+
+    padding-top: 25px !important;
+    padding-bottom: 50px !important;
+
+    resize: vertical;
+}
+
+/* MESSAGE ICON */
+
+#contact #contactForm .message-box > i {
+
+    top: 25px !important;
+    transform: none !important;
+}
+
+/* CHARACTER COUNTER */
+
+#contact #contactForm .message-counter {
+
+    display: flex;
+    justify-content: flex-end;
+
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--accent);
+}
