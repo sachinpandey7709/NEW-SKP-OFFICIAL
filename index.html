@@ -505,30 +505,16 @@
            required>
     </div>
 
-    <!-- Subject Dropdown -->
+            <!-- Subject -->
             <div class="input-box">
-    <i class="bx bx-edit-alt"></i><select name="subject_option" id="subjectOption" required>
-    <option value="" disabled selected>Select Subject</option>
-    <option value="Job Opportunity">Job Opportunity</option>
-    <option value="Internship Opportunity">Internship Opportunity</option>
-    <option value="Cybersecurity Collaboration">Cybersecurity Collaboration</option>
-    <option value="Project Discussion">Project Discussion</option>
-    <option value="Technical Support">Technical Support</option>
-    <option value="General Inquiry">General Inquiry</option>
-    <option value="Other">Other (Write Your Own)</option>
-</select>
-
+            <i class="bx bx-edit-alt"></i>
+            <input type="text"
+           name="subject"
+           id="subject"
+           placeholder="Enter Subject"
+           autocomplete="off"
+           required>
 </div>
-            <!-- Custom Subject Input --><div class="input-box" id="customSubjectBox" style="display: none;">
-    <i class="bx bx-pencil"></i><input type="text"
-       name="custom_subject"
-       id="customSubject"
-       placeholder="Write Your Own Subject"
-       autocomplete="off">
-
-</div>
-            <!-- Final Email Subject -->
-            <input type="hidden" name="subject" id="finalSubject">
 
             <!-- Message -->
             <div class="input-box message-box">
