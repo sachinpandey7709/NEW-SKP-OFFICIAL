@@ -747,6 +747,59 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+// ==========================================
+// SUBJECT DROPDOWN WITH CUSTOM SUBJECT
+// ==========================================
+
+const subjectOption = document.getElementById("subjectOption");
+const customSubjectBox = document.getElementById("customSubjectBox");
+const customSubject = document.getElementById("customSubject");
+const finalSubject = document.getElementById("finalSubject");
+const contactForm = document.getElementById("contactForm");
+
+// Show custom subject input when Other is selected
+subjectOption.addEventListener("change", function () {
+
+if (this.value === "Other") {
+
+    customSubjectBox.style.display = "flex";
+    customSubject.required = true;
+    customSubject.focus();
+
+} else {
+
+    customSubjectBox.style.display = "none";
+    customSubject.required = false;
+    customSubject.value = "";
+
+}
+
+});
+
+// Set final subject before submitting the form
+contactForm.addEventListener("submit", function (event) {
+
+if (subjectOption.value === "Other") {
+
+    const customValue = customSubject.value.trim();
+
+    if (!customValue) {
+        event.preventDefault();
+        customSubject.focus();
+        return;
+    }
+
+    finalSubject.value = customValue;
+
+} else {
+
+    finalSubject.value = subjectOption.value;
+
+}
+
+});
+
+
 
 // ==========================================
 // END OF SKP OFFICIAL PORTFOLIO JAVASCRIPT
