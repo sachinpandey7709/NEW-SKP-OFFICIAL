@@ -1012,20 +1012,3 @@ footer a {
     font-size: 14px;
     color: var(--accent);
 }
-
-
-.input-box select {
-    width: 100%;
-    padding: 15px 15px 15px 45px;
-    border: none;
-    outline: none;
-    background: transparent;
-    color: inherit;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.input-box select option {
-    background: #1e1e1e;
-    color: #fff;
-}
