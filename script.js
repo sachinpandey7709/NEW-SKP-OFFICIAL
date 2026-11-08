@@ -695,6 +695,43 @@ if (document.readyState === "loading") {
 
 }
 
+// ==========================================
+// MESSAGE CHARACTER COUNTER
+// ==========================================
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const messageInput = document.getElementById("message");
+
+    const charCount = document.getElementById("charCount");
+
+    if (!messageInput || !charCount) {
+
+        console.error("Message or Character Counter not found!");
+
+        return;
+
+    }
+
+    function updateCharacterCount() {
+
+        const currentLength = messageInput.value.length;
+
+        charCount.textContent = `${currentLength} / 1000`;
+
+    }
+
+    // Count while typing and deleting
+
+    messageInput.addEventListener("input", updateCharacterCount);
+
+    // Initial count
+
+    updateCharacterCount();
+
+});
+
+
 
 // ==========================================
 // END OF SKP OFFICIAL PORTFOLIO JAVASCRIPT
