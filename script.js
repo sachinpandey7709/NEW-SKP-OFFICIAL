@@ -40,6 +40,7 @@ const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const sidebarClose = document.getElementById("sidebarClose");
 
+
 function openSidebar() {
 
     if (!sidebar || !overlay || !hamburger) return;
@@ -51,6 +52,7 @@ function openSidebar() {
     hamburger.setAttribute("aria-expanded", "true");
 
 }
+
 
 function closeSidebar() {
 
@@ -64,24 +66,62 @@ function closeSidebar() {
 
 }
 
+
 if (hamburger && sidebar && overlay && sidebarClose) {
 
     hamburger.addEventListener("click", openSidebar);
+
     sidebarClose.addEventListener("click", closeSidebar);
+
     overlay.addEventListener("click", closeSidebar);
 
     document.querySelectorAll(".sidebar a").forEach(link => {
+
         link.addEventListener("click", closeSidebar);
+
     });
 
 }
 
 
+// Close sidebar using Escape key
+
+document.addEventListener("keydown", function (event) {
+
+    if (event.key === "Escape") {
+        closeSidebar();
+    }
+
+});
+
+
 // ==========================================
-// 4. DARK MODE
+// 4. DARK MODE / LIGHT MODE
 // ==========================================
 
 const themeToggle = document.getElementById("themeToggle");
+
+
+function updateThemeIcon() {
+
+    if (!themeToggle) return;
+
+    const icon = themeToggle.querySelector("i");
+
+    if (!icon) return;
+
+    if (document.body.classList.contains("light")) {
+
+        icon.className = "bx bx-moon";
+
+    } else {
+
+        icon.className = "bx bx-sun";
+
+    }
+
+}
+
 
 if (themeToggle) {
 
@@ -89,39 +129,35 @@ if (themeToggle) {
 
         document.body.classList.toggle("light");
 
-        const icon = themeToggle.querySelector("i");
+        const currentTheme =
+            document.body.classList.contains("light")
+                ? "light"
+                : "dark";
 
-        if (icon) {
+        localStorage.setItem("theme", currentTheme);
 
-            if (document.body.classList.contains("light")) {
-                icon.className = "bx bx-moon";
-                localStorage.setItem("theme", "light");
-            } else {
-                icon.className = "bx bx-sun";
-                localStorage.setItem("theme", "dark");
-            }
-
-        }
+        updateThemeIcon();
 
     });
 
 }
 
-if (localStorage.getItem("theme") === "light") {
+
+// LOAD SAVED THEME
+
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
 
     document.body.classList.add("light");
 
-    if (themeToggle) {
+} else {
 
-        const icon = themeToggle.querySelector("i");
-
-        if (icon) {
-            icon.className = "bx bx-moon";
-        }
-
-    }
+    document.body.classList.remove("light");
 
 }
+
+updateThemeIcon();
 
 
 // ==========================================
@@ -130,24 +166,30 @@ if (localStorage.getItem("theme") === "light") {
 
 const colorPicker = document.getElementById("colorPicker");
 
+
 if (colorPicker) {
 
     colorPicker.addEventListener("input", function () {
 
+        const selectedColor = colorPicker.value;
+
         document.documentElement.style.setProperty(
             "--accent",
-            colorPicker.value
+            selectedColor
         );
 
-        localStorage.setItem("accentColor", colorPicker.value);
+        localStorage.setItem("accentColor", selectedColor);
 
     });
 
 }
 
+
+// LOAD SAVED COLOR
+
 const savedColor = localStorage.getItem("accentColor");
 
-if (savedColor) {
+if (savedColor && /^#[0-9A-Fa-f]{6}$/.test(savedColor)) {
 
     document.documentElement.style.setProperty(
         "--accent",
@@ -166,7 +208,9 @@ if (savedColor) {
 // ==========================================
 
 const skillFilter = document.getElementById("skillFilter");
+
 const skillCards = document.querySelectorAll(".skill-card");
+
 
 if (skillFilter) {
 
@@ -179,9 +223,13 @@ if (skillFilter) {
             const category = card.dataset.category;
 
             if (selected === "all" || selected === category) {
+
                 card.classList.remove("hide");
+
             } else {
+
                 card.classList.add("hide");
+
             }
 
         });
@@ -196,7 +244,9 @@ if (skillFilter) {
 // ==========================================
 
 const sections = document.querySelectorAll("main section");
+
 const navLinks = document.querySelectorAll(".nav-links a");
+
 
 function updateActiveLink() {
 
@@ -207,7 +257,9 @@ function updateActiveLink() {
         const sectionTop = section.offsetTop - 150;
 
         if (window.scrollY >= sectionTop) {
+
             current = section.getAttribute("id");
+
         }
 
     });
@@ -217,14 +269,19 @@ function updateActiveLink() {
         link.classList.remove("active");
 
         if (link.getAttribute("href") === "#" + current) {
+
             link.classList.add("active");
+
         }
 
     });
 
 }
 
+
 window.addEventListener("scroll", updateActiveLink);
+
+window.addEventListener("load", updateActiveLink);
 
 
 // ==========================================
@@ -234,6 +291,7 @@ window.addEventListener("scroll", updateActiveLink);
 const revealElements = document.querySelectorAll(
     ".section, .info-card, .skill-card, .service-card, .project-card"
 );
+
 
 if ("IntersectionObserver" in window) {
 
@@ -252,14 +310,25 @@ if ("IntersectionObserver" in window) {
         });
 
     }, {
+
         threshold: 0.12
+
     });
+
 
     revealElements.forEach(element => {
 
         element.classList.add("reveal");
 
         observer.observe(element);
+
+    });
+
+} else {
+
+    revealElements.forEach(element => {
+
+        element.classList.add("visible");
 
     });
 
@@ -285,7 +354,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             event.preventDefault();
 
             target.scrollIntoView({
-                behavior: "smooth"
+
+                behavior: "smooth",
+
+                block: "start"
+
             });
 
         }
@@ -296,7 +369,32 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // ==========================================
-// 10. CONTACT FORM - WEB3FORMS
+// 10. HTML ESCAPE SECURITY
+// ==========================================
+
+function escapeHTML(value) {
+
+    return String(value).replace(/[&<>"']/g, function (character) {
+
+        const entities = {
+
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+
+        };
+
+        return entities[character];
+
+    });
+
+}
+
+
+// ==========================================
+// 11. CONTACT FORM - WEB3FORMS
 // ==========================================
 
 function initializeContactForm() {
@@ -308,27 +406,38 @@ function initializeContactForm() {
     const formMessage = document.getElementById("formMessage");
 
 
-    // Check HTML elements
+    // CHECK FORM ELEMENTS
 
     if (!contactForm || !submitBtn) {
 
-        console.error("Contact Form elements not found!");
+        console.error("Contact Form HTML elements not found!");
 
         return;
 
     }
 
+
     console.log("Contact Form Initialized Successfully!");
 
 
-    contactForm.addEventListener("submit", async function (event) {
+    let isSubmitting = false;
 
-        // Stop page reload
+
+    // FORM SUBMISSION
+
+    contactForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
+        event.stopPropagation();
 
-        // Validate form
+
+        // PREVENT DOUBLE SUBMISSION
+
+        if (isSubmitting) return;
+
+
+        // FORM VALIDATION
 
         if (!contactForm.checkValidity()) {
 
@@ -339,20 +448,20 @@ function initializeContactForm() {
         }
 
 
-        // Check SweetAlert2
+        // CHECK SWEETALERT2
 
         if (typeof Swal === "undefined") {
 
-            alert("SweetAlert2 library is not loaded!");
+            alert("SweetAlert2 is not loaded. Please check your HTML.");
 
-            console.error("SweetAlert2 not found!");
+            console.error("SweetAlert2 library not found!");
 
             return;
 
         }
 
 
-        // Get Access Key
+        // CHECK ACCESS KEY
 
         const accessKey = contactForm.querySelector(
             'input[name="access_key"]'
@@ -362,9 +471,13 @@ function initializeContactForm() {
         if (!accessKey || !accessKey.value.trim()) {
 
             Swal.fire({
-                title: "Missing Access Key!",
+
+                title: "Access Key Missing!",
+
                 text: "Please configure your Web3Forms Access Key.",
+
                 icon: "error"
+
             });
 
             return;
@@ -372,7 +485,37 @@ function initializeContactForm() {
         }
 
 
-        // Disable button
+        // GET VISITOR NAME
+
+        const nameInput = contactForm.querySelector(
+            '[name="name"]'
+        );
+
+        const visitorName = nameInput
+            ? nameInput.value.trim()
+            : "";
+
+
+        if (!visitorName) {
+
+            Swal.fire({
+
+                title: "Name Required!",
+
+                text: "Please enter your name.",
+
+                icon: "warning"
+
+            });
+
+            return;
+
+        }
+
+
+        // START LOADING
+
+        isSubmitting = true;
 
         submitBtn.disabled = true;
 
@@ -381,53 +524,71 @@ function initializeContactForm() {
 
 
         if (formMessage) {
+
             formMessage.style.display = "none";
+
         }
 
 
         try {
 
-            // Collect form data
+            // GET FORM DATA
 
             const formData = new FormData(contactForm);
 
 
-            // Send request to Web3Forms
+            // WEB3FORMS API REQUEST
 
             const response = await fetch(
                 "https://api.web3forms.com/submit",
                 {
+
                     method: "POST",
+
                     body: formData,
+
                     headers: {
+
                         "Accept": "application/json"
+
                     }
+
                 }
             );
 
 
-            // Read API response
+            // READ API RESPONSE
 
             const result = await response.json();
+
+
+            console.log("Web3Forms Status:", response.status);
 
             console.log("Web3Forms Response:", result);
 
 
-            // SUCCESS
+            // ==================================
+            // SUCCESS RESPONSE
+            // ==================================
 
             if (response.ok && result.success === true) {
 
+                // RESET FORM
+
                 contactForm.reset();
 
-                if (formMessage) {
-                    formMessage.style.display = "none";
-                }
+
+                // SUCCESS POPUP WITH DYNAMIC NAME
 
                 await Swal.fire({
 
-                    title: "Good Job!",
+                    title: "Message Sent Successfully!",
 
-                    text: "Your message has been sent successfully!",
+                    html: `
+                        <p>Thank you, <strong>${escapeHTML(visitorName)}</strong>!</p>
+                        <p>Your message has been sent successfully.</p>
+                        <p>I'll get back to you soon.</p>
+                    `,
 
                     icon: "success",
 
@@ -435,22 +596,29 @@ function initializeContactForm() {
 
                     confirmButtonColor: "#6c63ff",
 
-                    allowOutsideClick: false
+                    allowOutsideClick: false,
+
+                    allowEscapeKey: true
 
                 });
 
             }
 
 
+            // ==================================
             // API ERROR
+            // ==================================
 
             else {
+
+                console.error("Web3Forms Error:", result);
 
                 await Swal.fire({
 
                     title: "Message Failed!",
 
-                    text: result.message || "Your message could not be sent.",
+                    text: result.message ||
+                        "Your message could not be sent. Please try again.",
 
                     icon: "error",
 
@@ -460,14 +628,14 @@ function initializeContactForm() {
 
                 });
 
-                console.error("Web3Forms API Error:", result);
-
             }
 
         }
 
 
+        // ==================================
         // NETWORK ERROR
+        // ==================================
 
         catch (error) {
 
@@ -475,9 +643,9 @@ function initializeContactForm() {
 
             await Swal.fire({
 
-                title: "Network Error!",
+                title: "Oops!",
 
-                text: "Unable to connect to the server. Please check your internet connection.",
+                text: "Network error! Please check your internet connection and try again.",
 
                 icon: "error",
 
@@ -490,9 +658,13 @@ function initializeContactForm() {
         }
 
 
-        // RESTORE BUTTON
+        // ==================================
+        // RESTORE SUBMIT BUTTON
+        // ==================================
 
         finally {
+
+            isSubmitting = false;
 
             submitBtn.disabled = false;
 
@@ -506,7 +678,9 @@ function initializeContactForm() {
 }
 
 
-// Initialize form after HTML loads
+// ==========================================
+// 12. INITIALIZE CONTACT FORM
+// ==========================================
 
 if (document.readyState === "loading") {
 
@@ -523,5 +697,5 @@ if (document.readyState === "loading") {
 
 
 // ==========================================
-// END OF JAVASCRIPT
+// END OF SKP OFFICIAL PORTFOLIO JAVASCRIPT
 // ==========================================
