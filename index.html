@@ -449,7 +449,7 @@
             <!-- Web3Forms Access Key -->
             <input type="hidden"
                    name="access_key"
-                   value="ae488f0f-800e-42ef-8133-6fb99b865b42">
+                   value="YOUR_WEB3FORMS_ACCESS_KEY">
 
             <!-- Email Subject -->
             <input type="hidden"
@@ -457,36 +457,69 @@
                    value="New Message from SKP Official Portfolio">
 
             <!-- Name -->
-            <input type="text"
-                   name="name"
-                   placeholder="Your Name"
-                   autocomplete="name"
-                   required>
+            <div class="input-box">
+                <i class="bx bx-user"></i>
+
+                <input type="text"
+                       name="name"
+                       placeholder="Your Name"
+                       autocomplete="name"
+                       required>
+            </div>
 
             <!-- Email -->
-            <input type="email"
-                   name="email"
-                   placeholder="Your Email"
-                   autocomplete="email"
-                   required>
+            <div class="input-box">
+                <i class="bx bx-envelope"></i>
+
+                <input type="email"
+                       name="email"
+                       placeholder="Your Email"
+                       autocomplete="email"
+                       required>
+            </div>
 
             <!-- Phone Number -->
-            <input type="tel"
-                   name="phone"
-                   placeholder="Your Phone Number"
-                   pattern="[0-9]{10}"
-                   minlength="10"
-                   maxlength="10"
-                   inputmode="numeric"
-                   autocomplete="tel"
-                   title="Please enter exactly 10 digits"
-                   required>
+            <div class="input-box">
+                <i class="bx bx-phone"></i>
+
+                <input type="tel"
+                       name="phone"
+                       placeholder="Your Phone Number"
+                       pattern="[0-9]{10}"
+                       minlength="10"
+                       maxlength="10"
+                       inputmode="numeric"
+                       autocomplete="tel"
+                       title="Please enter exactly 10 digits"
+                       required>
+            </div>
 
             <!-- Message -->
-            <textarea name="message"
-                      placeholder="Your Message"
-                      rows="6"
-                      required></textarea>
+            <div class="input-box message-box">
+                <i class="bx bx-message-rounded"></i>
+
+                <textarea id="message"
+                          name="message"
+                          placeholder="Your Message"
+                          rows="6"
+                          minlength="10"
+                          maxlength="1000"
+                          required></textarea>
+
+                <div class="message-counter">
+                    <span id="charCount">0 / 1000</span>
+                </div>
+            </div>
+
+            <!-- Privacy Consent -->
+            <label class="privacy-check">
+                <input type="checkbox"
+                       name="consent"
+                       value="Accepted"
+                       required>
+
+                I agree to be contacted regarding my message.
+            </label>
 
             <!-- Submit Button -->
             <button type="submit"
