@@ -116,7 +116,7 @@ Follow these steps to run the portfolio locally.
 
 1. Clone the Repository
 
-git clone https://github.com/sachinpandey7709/
+git clone https://github.com/sachinpandey7709/NEW-SKP-OFFICIAL.git
 
 2. Navigate to the Project Directory
 
