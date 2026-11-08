@@ -289,41 +289,43 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 
 // ======================================
-// CONTACT FORM - WEB3FORMS
+// CONTACT FORM - WEB3FORMS + SWEETALERT2
 // ======================================
 
-document.addEventListener("DOMContentLoaded", function () {
+const contactForm = document.getElementById("contactForm");
+const submitBtn = document.getElementById("submitBtn");
+const formMessage = document.getElementById("formMessage");
 
-    const contactForm = document.getElementById("contactForm");
-    const formMessage = document.getElementById("formMessage");
-    const submitBtn = document.getElementById("submitBtn");
-
-    if (!contactForm || !formMessage || !submitBtn) {
-        console.error("Contact form elements not found!");
-        return;
-    }
+if (contactForm && submitBtn) {
 
     contactForm.addEventListener("submit", async function (event) {
 
         event.preventDefault();
 
+        // Validate form
         if (!contactForm.checkValidity()) {
             contactForm.reportValidity();
             return;
         }
 
+        // Check SweetAlert2
+        if (typeof Swal === "undefined") {
+            alert("SweetAlert2 is not loaded. Please check CDN.");
+            return;
+        }
+
+        // Disable button
         submitBtn.disabled = true;
+
         submitBtn.innerHTML =
             'Sending... <i class="bx bx-loader-alt bx-spin"></i>';
 
-        formMessage.style.display = "block";
-        formMessage.className = "form-message";
-        formMessage.textContent = "Sending your message...";
-
         try {
 
+            // Get form data
             const formData = new FormData(contactForm);
 
+            // Send request
             const response = await fetch(
                 "https://api.web3forms.com/submit",
                 {
@@ -341,22 +343,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (response.ok && result.success) {
 
-                formMessage.className = "form-message success";
-
-                formMessage.innerHTML = `
-                    <i class="bx bx-check-circle"></i>
-                    Message Sent Successfully!
-                    Thank you for contacting me.
-                `;
-
+                // Reset form
                 contactForm.reset();
+
+                // SUCCESS POPUP
+                await Swal.fire({
+
+                    title: "Good Job!",
+
+                    text: "Your message has been sent successfully!",
+
+                    icon: "success",
+
+                    confirmButtonText: "Great!",
+
+                    confirmButtonColor: "#6c63ff",
+
+                    showClass: {
+                        popup: "animate__animated animate__fadeInDown"
+                    },
+
+                    hideClass: {
+                        popup: "animate__animated animate__fadeOutUp"
+                    }
+
+                });
 
             } else {
 
-                formMessage.className = "form-message error";
+                // ERROR POPUP
+                Swal.fire({
 
-                formMessage.textContent =
-                    result.message || "Message sending failed.";
+                    title: "Oops!",
+
+                    text: result.message || "Message could not be sent.",
+
+                    icon: "error",
+
+                    confirmButtonText: "Try Again",
+
+                    confirmButtonColor: "#d33"
+
+                });
 
                 console.error("Web3Forms Error:", result);
 
@@ -364,15 +392,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         } catch (error) {
 
-            formMessage.className = "form-message error";
-
-            formMessage.textContent =
-                "Network error! Please check your internet connection and try again.";
-
             console.error("Contact Form Error:", error);
+
+            Swal.fire({
+
+                title: "Network Error!",
+
+                text: "Unable to send your message. Please check your internet connection.",
+
+                icon: "error",
+
+                confirmButtonText: "OK",
+
+                confirmButtonColor: "#d33"
+
+            });
 
         } finally {
 
+            // Restore button
             submitBtn.disabled = false;
 
             submitBtn.innerHTML =
@@ -381,34 +419,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
     });
-
-});
-
-
-if (response.ok && result.success) {
-
-    Swal.fire({
-        title: "Good Job!",
-        text: "Your message has been sent successfully!",
-        icon: "success",
-        confirmButtonText: "Great!",
-        confirmButtonColor: "#6c63ff"
-    });
-
-    contactForm.reset();
-
-}
-
-catch (error) {
-
-    Swal.fire({
-        title: "Oops!",
-        text: "Something went wrong! Please try again.",
-        icon: "error",
-        confirmButtonText: "OK",
-        confirmButtonColor: "#d33"
-    });
-
-    console.error("Contact Form Error:", error);
 
 }
