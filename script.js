@@ -695,6 +695,21 @@ if (document.readyState === "loading") {
 
 }
 
+const messageInput = document.getElementById("message");
+const charCount = document.getElementById("charCount");
+
+if (messageInput && charCount) {
+
+    messageInput.addEventListener("input", function () {
+
+        charCount.textContent =
+            `${messageInput.value.length} / 1000`;
+
+    });
+
+}
+
+
 // ==========================================
 // MESSAGE CHARACTER COUNTER
 // ==========================================
